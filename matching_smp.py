@@ -28,13 +28,12 @@ for line in f:
   ln=fsplit[1]
   mentee_name=fn + ' '+ ln
   #Starting loop to check if mentor has space, matched, leftovers and if not working  
+  mentor_match = False
   for i in range(2,6):
-    mentor_name=mentors[fsplit[i]][0]
-    if len(matched[mentor_name]) < int(mentors[fsplit[2]][1]):
-     matched.setdefault(mentor_name, []).append(mentee_name)
-     break
-    elif mentee_name not in leftovers:
-      leftovers.append(mentee_name)
-      break
-    else:
-        print('im broken'+ mentee_name)
+    if mentor_match == False:
+      mentor_name=mentors[fsplit[i]][0]
+      if len(matched[mentor_name]) < int(mentors[fsplit[i]][1]):
+        matched.setdefault(mentor_name, []).append(mentee_name)
+        mentor_match = True
+  if mentor_match == False:
+        leftovers.append(mentee_name)
