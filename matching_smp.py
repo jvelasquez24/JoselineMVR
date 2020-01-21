@@ -1,10 +1,14 @@
 import sys
+import csv
 #inputs
+#remember to add python script names to input 
 mentors_file= sys.argv[1]
 mentee_file= sys.argv[2]
+outfile=sys.argv[3]
 #opening files
 m= open(mentors_file, 'r')
 f= open(mentee_file,'r')
+o=open(outfile,'w')
 line=f.readline()
 #opening storage places 
 mentee={}
@@ -37,3 +41,11 @@ for line in f:
         mentor_match = True
   if mentor_match == False:
         leftovers.append(mentee_name)
+ #Closing files 
+  f.close()
+  m.close()
+ #writing out matches      
+  with open(outfile, 'w', newline="") as csv_file:  
+      writer = csv.writer(csv_file)
+      for key, value in matched.items():
+        writer.writerow([key, value])
