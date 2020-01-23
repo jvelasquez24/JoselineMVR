@@ -1,7 +1,6 @@
 import sys
-import csv
 #inputs
-#remember to add python script names to input 
+#remember to add python script names to input
 mentors_file= sys.argv[1]
 mentee_file= sys.argv[2]
 outfile=sys.argv[3]
@@ -10,27 +9,27 @@ m= open(mentors_file, 'r')
 f= open(mentee_file,'r')
 w=open(outfile,'w')
 line=f.readline()
-#opening storage places 
+#opening storage places
 mentors={}
 matched={}
 leftovers = []
 ustu=[]
-#Creating Mentor information 
+#Creating Mentor information
 for alines in m:
   if 'alias' in alines:
     continue
   mspline=alines.split()
   mentors[mspline[0]]=[mspline[1],mspline[2]]
-#This is setting up the names of mentors with mentee list 
+#This is setting up the names of mentors with mentee list
 for i in mentors:
   matched[mentors[i][0]]=[]
-#This is creating the menee names  
+#This is creating the menee names
 for line in f:
   fsplit = line.split()
   fn=fsplit[0]
   ln=fsplit[1]
   mentee_name=fn + ' '+ ln
-  #Starting loop to check if mentor has space, matched, leftovers and if not working  
+  #Starting loop to check if mentor has space, matched, leftovers and if not working
   mentor_match = False
   for i in range(2,6):
     if mentor_match == False:
@@ -50,7 +49,7 @@ for line in f:
 header='USTU,'
 w.write(header)
 for a in ustu:
-    w.write(str(a)+',')  
+    w.write(str(a)+',')
 unpaired='\nUnpaired,'
 w.write(unpaired)
 for b in leftovers:
