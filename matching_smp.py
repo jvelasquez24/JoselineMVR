@@ -8,20 +8,19 @@ outfile=sys.argv[3]
 #opening files
 m= open(mentors_file, 'r')
 f= open(mentee_file,'r')
-o=open(outfile,'w')
+w=open(outfile,'w')
 line=f.readline()
 #opening storage places 
-mentee={}
 mentors={}
 matched={}
 leftovers = []
-
+ustu=[]
+#Creating Mentor information 
 for alines in m:
   if 'alias' in alines:
     continue
   mspline=alines.split()
   mentors[mspline[0]]=[mspline[1],mspline[2]]
-# print(mentors)
 #This is setting up the names of mentors with mentee list 
 for i in mentors:
   matched[mentors[i][0]]=[]
@@ -35,8 +34,11 @@ for line in f:
   mentor_match = False
   for i in range(2,6):
     if mentor_match == False:
+      if 'ustu' in line:
+        ustu.append(mentee_name)
+        mentor_match = True
       mentor_name=mentors[fsplit[i]][0]
-      if len(matched[mentor_name]) < int(mentors[fsplit[i]][1]):
+      elif len(matched[mentor_name]) < int(mentors[fsplit[i]][1]):
         matched.setdefault(mentor_name, []).append(mentee_name)
         mentor_match = True
   if mentor_match == False:
@@ -44,8 +46,23 @@ for line in f:
  #Closing files 
   f.close()
   m.close()
- #writing out matches      
-  with open(outfile, 'w', newline="") as csv_file:  
-      writer = csv.writer(csv_file)
-      for key, value in matched.items():
-        writer.writerow([key, value])
+#Wrting outfile with matches
+header='USTU,'
+w.write(header)
+for a in ustu:
+    w.write(str(a)+',')  
+unpaired='\nUnpaired,'
+w.write(unpaired)
+for b in leftovers:
+    w.write(str(b)+',')
+mentor='\nMatches\n'
+w.write(mentor)
+mach=''
+for c in matched:
+  w.write(str(c)+',')
+  for d in matched[c]:
+    mach=str(d)
+    w.write(mach+',')
+  newline='\n'
+  w.write(newline)
+w.close()
