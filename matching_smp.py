@@ -7,7 +7,7 @@ outfile=sys.argv[3]
 #opening files
 m= open(mentors_file, 'r')
 f= open(mentee_file,'r')
-w=open(outfile,'w')
+w= open(outfile,'w+')
 line=f.readline()
 #opening storage places
 mentors={}
@@ -33,18 +33,18 @@ for line in f:
   mentor_match = False
   for i in range(2,6):
     if mentor_match == False:
+      mentor_name=mentors[fsplit[i]][0]
       if 'ustu' in line:
         ustu.append(mentee_name)
         mentor_match = True
-      mentor_name=mentors[fsplit[i]][0]
       elif len(matched[mentor_name]) < int(mentors[fsplit[i]][1]):
         matched.setdefault(mentor_name, []).append(mentee_name)
         mentor_match = True
   if mentor_match == False:
         leftovers.append(mentee_name)
- #Closing files 
-  f.close()
-  m.close()
+#Closing files 
+f.close()
+m.close()
 #Wrting outfile with matches
 header='USTU,'
 w.write(header)
