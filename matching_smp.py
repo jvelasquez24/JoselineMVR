@@ -42,9 +42,7 @@ for line in f:
         mentor_match = True
   if mentor_match == False:
         leftovers.append(mentee_name)
-#Closing files 
-f.close()
-m.close()
+val_list = list(mentors.values())        
 #Wrting outfile with matches
 header='USTU,'
 w.write(header)
@@ -62,6 +60,13 @@ for c in matched:
   for d in matched[c]:
     mach=str(d)
     w.write(mach+',')
+  for e in val_list:
+    if e[0] == c:
+      empty_slots = int(e[1]) - len(matched[e[0]])
+      w.write(str(empty_slots)+' slots left,')
   newline='\n'
   w.write(newline)
+#Closing files 
+f.close()
+m.close()
 w.close()
