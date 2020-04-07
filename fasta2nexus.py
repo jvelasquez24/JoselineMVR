@@ -11,32 +11,37 @@ name=[]
 seq=[]
 #sorting fasta
 for line in fi:
-  if '>' in line:
-    lplit=line.split()
-    name.append(lplit[0])
-  if 'A' in line:
-    seqlit=line.split()
-    seq.append(seqlit[0])
+    if '>' in line:
+        lplit=line.split()
+        name.append(lplit[0].replace('>',''))
+        print(line)
+    elif 'A' or '?' in line:
+        seqlit=line.split()
+        seq.append(seqlit[0])
+        print(line)
 for i in range(0,len(name)):
-  dna[name[i]]=[seq[i]]
+    dna[name[i]]=[seq[i]]
 #formating
-ntax=str((len(dna)))
-nchar=str(len(seq[0]))
-newline='\n'
-header='#NEXUS\n'
-start_block='Begin DATA;\n'
-data_type='DATATYPE=DNA;'
-first_line='\tDimensions NTAX='+ntax+' NCHAR='+nchar+';\n'
-second_line='\tFormat MISSING=? GAP=-'+' '+data_type+'\n'
-matrix='\tMatrix'
-endblock='\t;\nEND;'
-#writing out nexus file
-ofi.write(header+newline+start_block+first_line+second_line+matrix+newline)
-for ii in dna:
-  clean=ii.replace('>','')
-  ofi.write(str(clean)+' ')
-  ofi.write(str(dna[ii][0])+'\n')
-ofi.write(endblock)
-#Closing files
-ofi.close()
-fi.close()
+if len(seq[0])==len(seq[1]):
+    print("these first two are equal")
+    ntax=str((len(dna)))
+    nchar=str(len(seq[0]))
+    newline='\n'
+    header='#NEXUS\n'
+    start_block='Begin DATA;\n'
+    data_type='DATATYPE=DNA;'
+    first_line='\tDimensions NTAX='+ntax+' NCHAR='+nchar+';\n'
+    second_line='\tFormat MISSING=? GAP=-'+' '+data_type+'\n'
+    matrix='\tMatrix'
+    endblock='\t;\nEND;'
+    #writing out nexus file
+    ofi.write(header+newline+start_block+first_line+second_line+matrix+newline)
+    for ii in dna:
+        ofi.write(str(ii)+' ')
+        ofi.write(str(dna[ii][0])+'\n')
+    ofi.write(endblock)
+    #Closing files
+    ofi.close()
+    fi.close()
+else:
+    print("ERROR: Sequences are not equal lengths")
