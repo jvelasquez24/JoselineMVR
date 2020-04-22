@@ -14,11 +14,9 @@ for line in fi:
     if '>' in line:
         lplit=line.split()
         name.append(lplit[0].replace('>',''))
-        print(line)
     elif 'A' or '?' in line:
         seqlit=line.split()
         seq.append(seqlit[0])
-        print(line)
 for i in range(0,len(name)):
     dna[name[i]]=[seq[i]]
 #formating
