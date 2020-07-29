@@ -26,6 +26,9 @@ primary_gene_expression = df2[df2.columns.intersection(only_primary_columns)]
 # primary_gene_expression["mean"] = av.values
 print(primary_gene_expression.head())
 
-normalized_df = (primary_gene_expression - primary_gene_expression.mean(axis = 1))
-print(normalized_df.head())
+#normalized_df = (primary_gene_expression - primary_gene_expression.mean(axis = 1))
+#print(normalized_df.head())
 # print(av.head())
+#print(primary_gene_expression - primary_gene_expression.mean(axis = 1))
+normalized_df = primary_gene_expression.apply(lambda x: x - primary_gene_expression.mean(axis = 1))
+print(normalized_df.head())
